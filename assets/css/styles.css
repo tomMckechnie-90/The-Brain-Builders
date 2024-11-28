@@ -1,0 +1,105 @@
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Protest+Revolution&display=swap');
+
+
+/* Variables */ 
+
+
+/* General */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Serif', serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}   
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Protest Revolution', sans-serif;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 1rem 0;
+}
+
+header#hero {
+  min-height: 60vh;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 20px;   
+}
+
+.card.active {
+  opacity: 1; /* Fade in */
+  transform: translateX(0); /* Slide to original position */
+}
+
+
+.card {
+  width: 100px;
+  height: 150px;
+  perspective: 1000px; /* Enables 3D effect */
+  position: relative;
+  background-color: #007bff;
+  border-radius: 8px;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transform-style: preserve-3d;  
+  opacity: 0; /* Initially hidden */
+  transform: translateX(-100%); /* Start off-screen (below the board) */
+  transition: transform 0.6s ease, opacity 0.6s ease, background-color 0.3s; /* Smooth slide and fade-in */
+
+  
+}
+
+.card.flipped {
+  background-color: white;
+  color: black;
+  cursor: default;
+  transform: rotateY(180deg);
+}
+
+
+
+.card.matched {
+  background-color: #28a745;
+  color: white;
+  cursor: default;
+}
+
+.start-button, .restart-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.start-button:hover, .restart-button:hover {
+  background-color: #0056b3;
+}
+
+#status-message {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #6c757d;
+}
