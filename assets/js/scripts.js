@@ -18,14 +18,20 @@ let start = false;
 
 // Card images (use dummy numbers or replace with images)
 const cardImages = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5]; // 5 pairs
+/*
+1. france
+2. united-states
+3. germany
+4. england
+5. italy
+
+*/
+const flags = ["france", "united-states", "germany", "england", "italy"]; // 3 flags
 
  
 
 
 function startGame() { 
-  console.log("Game started");
-  
-
   // Hide header section
   header.style.display = "none";
   // Unhide main section
