@@ -3,15 +3,23 @@ const restartGameButton = document.getElementById("restart-game-button");
 const header = document.getElementById("hero");
 const main = document.getElementById("main");
 const gameBoard = document.getElementById("game-board");
+const statusMessage = document.getElementById("status-message");
+const gameLevel = document.getElementById("level");
+
 
 // Start button
 startGameButton.addEventListener("click", startGame);
+// Restart button
+restartGameButton.addEventListener("click", startGame);
+
 // Hide main section
 main.style.display = "none";
 // Hide restart button
 restartGameButton.style.display = "none";
 // Start game boolean
 let start = false;
+let level = 1;
+gameLevel.textContent = `Level ${level}`;
 
 // Shared variables
 let cards = [];
@@ -24,9 +32,8 @@ const imageMap = {
   2: "assets/images/france.png",
   3: "assets/images/germany.png",
   4: "assets/images/italy.png",
-  5: "assets/images/norway.png"
- 
-
+  5: "assets/images/norway.png",
+  
 }
 
 const laevel2ImageMap = {
@@ -61,9 +68,14 @@ function startGame() {
   
 
   // Create the card
-  shuffledCardValues.forEach((element) => {
+  shuffledCardValues.forEach((element, index) => {
     const card = createCard(element);
-
+    // Staggered transition
+    
+    setTimeout(() => {
+    card.classList.add("slideIn");
+    }, index * 200); 
+    console.log(index)
     gameBoard.appendChild(card);
   });
 
@@ -95,58 +107,13 @@ function startGame() {
     card.appendChild(cardInner);
 
     // Add flip functionality
-    card.addEventListener("click", () => flipCard(card));
-    return card;
-
-
-
-    /*
-
-    const card = document.createElement("div");
-    card.classList.add("card");
-    card.dataset.value = value;
-    card.textContent = "?";
-  
-    // Add an image placeholder
-    const cardImage = document.createElement("img");
-    const cardValue = `${value}`;
-    cardImage.src = imageMap[cardValue]; // Back of the card
-    cardImage.alt = "Card back";
-    cardImage.classList.add("card-img");
-  
-    card.appendChild(cardImage);
-  
-    // Add flip functionality
-    card.addEventListener("click", () => flipCard(card));
-    return card;*/
+    card.addEventListener("click", () => flipCard(card));   
+    return card;   
   }
 
 
-  // shuffledImages.forEach((image, index) => {
-
-  //   const card = document.createElement("div");
-  //   card.classList.add("card");
-  //   card.dataset.value = image;
-  //   card.dataset.index = index;
-
-    
-
-  //   card.addEventListener("click", handleCardClick);
-  //   gameBoard.appendChild(card);
-  //   cards.push(card);
-  // });
-
-  // Delay adding 'active' class for smooth transition
-  // setTimeout(() => {
-  //   cards.forEach((card) => card.classList.add("active"));
-  // }, 100); // Delay ensures DOM rendering before transition starts
-  // Staggered transition
-  // cards.forEach((card, index) => {
-  //   setTimeout(() => {
-  //     card.classList.add("active");
-  //   }, index * 150); 
-    // Adjust this multiplier for slower or faster stagger
-//   });
+  
+  
 }
 
 // Function to generate card values
@@ -166,7 +133,42 @@ function shuffleCardValues(array) {
 
 // Function to flip the card
 function flipCard(card) {
-  console.log("Card flipped")
+  if(flippedCards.length < 2 && !card.classList.contains('flipped')) {
+    card.classList.add("flipped");
+  }
+  flippedCards.push(card);
+
+  if(flippedCards.length === 2) {
+    checkForMatch();
+  }
   
-  
+}
+
+// Function to check if the flipped cards match
+function checkForMatch() {
+  const [card1, card2] = flippedCards;
+  if(card1.dataset.value === card2.dataset.value) {
+    matchedPairs++;
+    flippedCards = [];
+    // Check if all the cards are flipped
+    if(matchedPairs === Object.keys(imageMap).length) {
+      statusMessage.textContent = "Congratulations! You've matched all the cards!";
+      // Unhide restart button
+      restartGameButton.style.display = "block";
+      restartGameButton.innerHTML = `Click to go to level ${++level}`;
+    }
+  } else {
+    setTimeout(() => {
+      card1.classList.remove('flipped');
+      card2.classList.remove('flipped');
+      flippedCards = [];
+    }, 1000);
+    
+  }
+
+
+  // Function to play level 2
+  function level2() {
+
+  }
 }
