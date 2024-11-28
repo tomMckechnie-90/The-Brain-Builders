@@ -10,75 +10,153 @@ startGameButton.addEventListener("click", startGame);
 main.style.display = "none";
 // Hide restart button
 restartGameButton.style.display = "none";
+// Start game boolean
+let start = false;
+
+// Shared variables
 let cards = [];
 let flippedCards = [];
 let matchedPairs = 0;
-// Start game
-let start = false;
 
-// Card images (use dummy numbers or replace with images)
-const cardImages = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5]; // 5 pairs
-/*
-1. france
-2. united-states
-3. germany
-4. england
-5. italy
-
-*/
-const flags = ["france", "united-states", "germany", "england", "italy"]; // 3 flags
-
+// imageMap mapping numbers to flag images
+const imageMap = {
+  1: "assets/images/czech_republic.png",
+  2: "assets/images/france.png",
+  3: "assets/images/germany.png",
+  4: "assets/images/italy.png",
+  5: "assets/images/norway.png"
  
 
+}
 
-function startGame() { 
+const laevel2ImageMap = {
+  1: "assets/images/czech_republic.png",
+  2: "assets/images/france.png",
+  3: "assets/images/germany.png",
+  4: "assets/images/italy.png",
+  5: "assets/images/norway.png",
+  6: "assets/images/portugal.png",
+  7: "assets/images/spain.png",
+  8: "assets/images/sweden.png"
+}
+
+// Start game function
+function startGame() {   
   // Hide header section
   header.style.display = "none";
   // Unhide main section
   main.style.display = "block";
 
-  let cards = [];
-  let flippedCards = [];
-  let matchedPairs = 0;
-  let start = true;
-
-  // Shuffle cards
-  const shuffledImages = shuffleArray([...cardImages]);  
+  // rest the state of these variables
+  cards = [];
+  flippedCards = [];
+  matchedPairs = 0;
+  start = true; // Game started, turn start to true   
   
-  // Create cards dynamically
-  gameBoard.innerHTML = "";
-  shuffledImages.forEach((image, index) => {
+  gameBoard.innerHTML = ""; // clear the board for the cards
+  // Generate values for the cards
+  const generatedCardValues = generateCardValues();
+  // Shuffle the numbers
+  const shuffledCardValues = shuffleCardValues(generatedCardValues); 
+  
+
+  // Create the card
+  shuffledCardValues.forEach((element) => {
+    const card = createCard(element);
+
+    gameBoard.appendChild(card);
+  });
+
+  // this function creates a card
+  function createCard(value) {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.dataset.value = value;
+
+    // inner div in card
+    const cardInner = document.createElement("div");
+    cardInner.classList.add("card-inner");
+    // front div with class and content 
+    const cardFront = document.createElement("div");
+    cardFront.classList.add("card-front");
+    cardFront.textContent = "?"; // Question mark on front
+
+    // back div with flag image
+    const cardBack = document.createElement("div");
+    cardBack.classList.add("card-back");
+    const img = document.createElement("img");
+    img.src = imageMap[value]; // Use the image map to assign the correct image
+    img.alt = "Flag";
+    cardBack.appendChild(img);
+
+    // inner div should contain front and back divs which should go inside card
+    cardInner.appendChild(cardFront);
+    cardInner.appendChild(cardBack);
+    card.appendChild(cardInner);
+
+    // Add flip functionality
+    card.addEventListener("click", () => flipCard(card));
+    return card;
+
+
+
+    /*
 
     const card = document.createElement("div");
     card.classList.add("card");
-    card.dataset.value = image;
-    card.dataset.index = index;
+    card.dataset.value = value;
+    card.textContent = "?";
+  
+    // Add an image placeholder
+    const cardImage = document.createElement("img");
+    const cardValue = `${value}`;
+    cardImage.src = imageMap[cardValue]; // Back of the card
+    cardImage.alt = "Card back";
+    cardImage.classList.add("card-img");
+  
+    card.appendChild(cardImage);
+  
+    // Add flip functionality
+    card.addEventListener("click", () => flipCard(card));
+    return card;*/
+  }
+
+
+  // shuffledImages.forEach((image, index) => {
+
+  //   const card = document.createElement("div");
+  //   card.classList.add("card");
+  //   card.dataset.value = image;
+  //   card.dataset.index = index;
 
     
 
-    card.addEventListener("click", handleCardClick);
-    gameBoard.appendChild(card);
-    cards.push(card);
-  });
+  //   card.addEventListener("click", handleCardClick);
+  //   gameBoard.appendChild(card);
+  //   cards.push(card);
+  // });
 
   // Delay adding 'active' class for smooth transition
   // setTimeout(() => {
   //   cards.forEach((card) => card.classList.add("active"));
   // }, 100); // Delay ensures DOM rendering before transition starts
   // Staggered transition
-  cards.forEach((card, index) => {
-    setTimeout(() => {
-      card.classList.add("active");
-    }, index * 150); // Adjust this multiplier for slower or faster stagger
-  });
-
-
- 
-
+  // cards.forEach((card, index) => {
+  //   setTimeout(() => {
+  //     card.classList.add("active");
+  //   }, index * 150); 
+    // Adjust this multiplier for slower or faster stagger
+//   });
 }
 
-// Shuffle array (Fisher-Yates algorithm)
-function shuffleArray(array) {
+// Function to generate card values
+function generateCardValues() {
+  const values = Object.keys(imageMap); // list the key
+  return [...values, ...values]; // Unpack the array and return two times
+}
+
+// Function to shuffle card numbers (Fisher-Yates algorithm)
+function shuffleCardValues(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -86,55 +164,9 @@ function shuffleArray(array) {
   return array;
 }
 
-// Handle card click
-function handleCardClick(e) {
-  const card = e.target;
-
-  // Ignore clicks on already flipped or matched cards
-  if (card.classList.contains("flipped") || card.classList.contains("matched")) {
-    return;
-  }
-
-  // Flip the card
-  flipCard(card);
-  flippedCards.push(card);
-
-  // Check for match
-  if (flippedCards.length === 2) {
-    const [card1, card2] = flippedCards;
-
-    if (card1.dataset.value === card2.dataset.value) {
-      // Match found
-      card1.classList.add("matched");
-      card2.classList.add("matched");
-      matchedPairs++;
-
-      // Check win condition
-      if (matchedPairs === cardImages.length / 2) {
-        statusMessage.textContent = "Congratulations! You've matched all the cards!";
-          // Show restart button
-          restartGameButton.style.display = "block";
-      }
-    } else {
-      // No match, flip back after a delay
-      setTimeout(() => {
-        unflipCard(card1);
-        unflipCard(card2);
-      }, 1000);
-    }
-
-    flippedCards = [];
-  }
-}
-
-// Flip card
+// Function to flip the card
 function flipCard(card) {
-  card.classList.add("flipped");
-  card.textContent = card.dataset.value; // Show card value (or image)
-}
-
-// Unflip card
-function unflipCard(card) {
-  card.classList.remove("flipped");
-  card.textContent = ""; // Hide card value
+  console.log("Card flipped")
+  
+  
 }
