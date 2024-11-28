@@ -33,53 +33,80 @@ header#hero {
 }
 
 .game-board {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  margin-top: 20px;   
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;   
+  margin-top: 20px;
 }
 
-.card.active {
-  opacity: 1; /* Fade in */
-  transform: translateX(0); /* Slide to original position */
-}
-
-
+/* card container*/
 .card {
   width: 100px;
-  height: 150px;
-  perspective: 1000px; /* Enables 3D effect */
+  height: 100px;
+  border: 1px solid #ccc; /* test and remove */
+  perspective: 1000px; 
   position: relative;
-  background-color: #007bff;
-  border-radius: 8px;
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
-  transform-style: preserve-3d;  
-  opacity: 0; /* Initially hidden */
-  transform: translateX(-100%); /* Start off-screen (below the board) */
-  transition: transform 0.6s ease, opacity 0.6s ease, background-color 0.3s; /* Smooth slide and fade-in */
+  transform-style: preserve-3d;
+  opacity: 0; /* opacity of 0 is hidden */
+  transform: translateX(-100%);
+  transition: transform 0.6s ease, opacity 0.6s ease;
 
-  
 }
 
-.card.flipped {
-  background-color: white;
-  color: black;
-  cursor: default;
-  transform: rotateY(180deg);
+/* Inner card that flips */
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d; /* Responsible for 3d transformation */
+  transition: transform 0.6s;
 }
 
+/* Front and Back Faces*/
+.card-front,
+.card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden; /* Hide the back when the front is visible */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  font-weight: bold;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
 
+/* Front Face (Shows "?") */
+.card-front {
+  background-color: #f8f9fa; /* Light gray background */
+  color: #343a40;           /* Dark text */
+  z-index: 2;
+}
 
-.card.matched {
-  background-color: #28a745;
-  color: white;
-  cursor: default;
+/* Back Face (Shows the Image) */
+.card-back {
+  background-color: #fff; /* White background */
+  transform: rotateY(180deg); /* Initially flipped */
+  overflow: hidden; /* Prevents image overflow */
+}
+
+.card-back img {
+  width: 100%;
+  height: 100%;  
+}
+
+/* Flipped State */
+.card.flipped .card-inner {
+  transform: rotateY(180deg); /* Flips the card to reveal the back */
+}
+
+.card.slideIn {
+  opacity: 1; /* Fade in */
+  transform: translateX(0); /* Slide to position */
 }
 
 .start-button, .restart-button {
@@ -102,4 +129,14 @@ header#hero {
   font-size: 18px;
   font-weight: bold;
   color: #6c757d;
+}
+
+
+
+
+/* Media Queries*/
+@media screen and (max-width: 576px) {
+  body {
+    
+  }
 }
