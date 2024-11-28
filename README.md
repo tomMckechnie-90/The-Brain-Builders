@@ -12,7 +12,7 @@
 -[Future Improvements](#future-improvements)
 
 ## Overview
-
+This project is a Flip and Match Cards game called the Brain Builders Game. It enhances our memory by helping to remember where objects are located so we can match similiar picture objects together. It is designed using HTML, CSS, and JavaScript. The player flips two cards per turn, if they match they are kept open and the game increments the number of matched pairs (successful matches). If the cards do not match, they are flipped back to the board (within one second) while the player continues the game.The player wins when all the flipped pairs match. The player is congratulated. 
 
 
 ## User stories
