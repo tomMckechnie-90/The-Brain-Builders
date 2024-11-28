@@ -1,0 +1,37 @@
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Protest+Revolution&display=swap');
+
+
+/* Variables */ 
+
+
+/* General */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Serif', serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}   
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Protest Revolution', sans-serif;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 1rem 0;
+}
+
+header#hero {
+  min-height: 60vh;
+}
+
+#game-board {
+  
+}
