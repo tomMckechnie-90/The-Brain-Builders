@@ -24,6 +24,11 @@ This project is a Flip and Match Cards game called the Brain Builders Game. It e
 
 ### Wireframes
 
+![mobile-wireframe](/assets/images/mobile-wireframe.PNG)
+
+![tablet-wireframe](/assets/images/tablet-wireframe.PNG)
+
+![desktop-wireframe](/assets/images/desktop-wireframe.png(1).PNG)
 
 ### Colour Scheme
 
@@ -66,8 +71,8 @@ This project is a Flip and Match Cards game called the Brain Builders Game. It e
 
 ### Testing
 
-
-
+- [HTML Validator](https://validator.w3.org/)
+- [CSS Validator](https://jigsaw.w3.org/css-validator/)
 
 ## Future Improvements
 
