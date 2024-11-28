@@ -71,8 +71,8 @@ This project is a Flip and Match Cards game called the Brain Builders Game. It e
 
 ### Testing
 
-
-
+- [HTML Validator](https://validator.w3.org/)
+- [CSS Validator](https://jigsaw.w3.org/css-validator/)
 
 ## Future Improvements
 
