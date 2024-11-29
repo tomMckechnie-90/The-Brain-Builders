@@ -1,4 +1,3 @@
-
 /* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Protest+Revolution&display=swap');
 
@@ -206,8 +205,30 @@ header#hero {
 
 
 /* Media Queries*/
-@media screen and (max-width: 576px) {
-  body {
-    
+@media (max-width: 320px) {
+  header#hero {
+    min-height: 60vh;
   }
 }
+/* @media (min-width: 720px) {
+  .game-board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 15px;
+  } */
+
+  /* .card {
+    width: 100%;
+    padding-top: 100%; This maintains a 1:1 aspect ratio
+    position: relative;
+  } */
+
+  /* .card-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+} */
