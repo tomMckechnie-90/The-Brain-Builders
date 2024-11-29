@@ -145,13 +145,61 @@ header#hero {
   border: 1px solid #98ff98;
 }
 
+/* Bootstrap Modal Custom Styles */
+.modal-content {
+  background-color: #87ceeb; /* Sky blue background */
+  color: #ffffff; /* White text */
+  border-radius: 10px; /* Rounded corners */
+  border: none; /* Remove default border */
+}
+
+.modal-header {
+  border-bottom: none; /* Remove default header border */
+}
+
+.modal-footer {
+  border-top: none; /* Remove default footer border */
+}
+
+.modal-title {
+  font-family: 'Protest Revolution', sans-serif; /* Custom font */
+  font-size: 1.5rem; /* Larger title */
+}
+
+.modal-body {
+  font-family: 'Noto Serif', serif; /* Custom font */
+  font-size: 1rem; /* Standard body text size */
+}
+
+
+
+.custom-restart-button {
+  background-color: #98ff98;
+  border: #98ff98;
+}
+
+.custom-restart-button:hover {
+  background-color: #ffffff;
+  border: #98ff98;
+  color: #98ff98;
+}
+
+
+  .custom-close-button {
+    background-color: #98ff98;
+    color: white;
+  }
+
+
+
+
 
 
 #status-message {
   margin-top: 20px;
   font-size: 18px;
   font-weight: bold;
-  color: #6c757d;
+  color: #ffffff
 }
 
 
