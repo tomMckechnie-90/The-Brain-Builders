@@ -17,8 +17,8 @@ body {
     font-family: 'Noto Serif', serif;
     font-size: 1rem;
     line-height: 1.6;
-    color: #333;
-    background-color: #f4f4f4;
+    color: #ffffff;
+    background-color: #87ceeb;
 }   
 
 h1, h2, h3, h4, h5, h6 {
@@ -30,6 +30,14 @@ h1, h2, h3, h4, h5, h6 {
 
 header#hero {
   min-height: 60vh;
+}
+
+.custom-list-bg .list-group-item {
+  /* min-height: 60vh; */
+  background-color: #87ceeb;
+  border: none;
+  color: #ffffff;
+  font-weight: bolder;
 }
 
 .game-board {
@@ -82,9 +90,10 @@ header#hero {
 
 /* Front Face (Shows "?") */
 .card-front {
-  background-color: #f8f9fa; /* Light gray background */
-  color: #343a40;           /* Dark text */
+  background-color: #98ff98; /* Light gray background */
+  color: #ffffff;           /* Dark text */
   z-index: 2;
+  border: 1px solid #98ff98;
 }
 
 /* Back Face (Shows the Image) */
@@ -123,6 +132,20 @@ header#hero {
 .start-button:hover, .restart-button:hover {
   background-color: #0056b3;
 }
+/* Button styles added by Tom */
+.start-game-button {
+  background-color: #98ff98;
+  border: 1px solid #98ff98;
+  color: #ffffff;
+}
+
+.start-game-button:hover{
+  background-color: #ffffff;
+  color: #98ff98;
+  border: 1px solid #98ff98;
+}
+
+
 
 #status-message {
   margin-top: 20px;
