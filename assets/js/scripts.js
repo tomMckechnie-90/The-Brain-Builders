@@ -153,6 +153,8 @@ function checkForMatch() {
     // Check if all the cards are flipped
     if(matchedPairs === Object.keys(imageMap).length) {
       statusMessage.textContent = "Congratulations! You've matched all the cards!";
+      const congratulationsModal = new bootstrap.Modal(document.getElementById('game-over-modal'));
+      congratulationsModal.show();
       // Unhide restart button
       restartGameButton.style.display = "block";
       restartGameButton.innerHTML = `Click to go to level ${++level}`;
@@ -167,8 +169,10 @@ function checkForMatch() {
   }
 
 
-  // Function to play level 2
-  function level2() {
+  
+}
 
-  }
+// Function to play level 2
+function level2() {
+  alert("Starting Level 2");
 }
