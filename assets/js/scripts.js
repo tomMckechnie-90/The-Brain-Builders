@@ -5,7 +5,8 @@ const main = document.getElementById("main");
 const gameBoard = document.getElementById("game-board");
 const statusMessage = document.getElementById("status-message");
 const gameLevel = document.getElementById("level");
-
+const timeDisplay = document.getElementById("time");
+const scoresDisplay = document.getElementById("scoreLine");
 
 // Start button
 startGameButton.addEventListener("click", startGame);
@@ -25,6 +26,11 @@ gameLevel.textContent = `Level ${level}`;
 let cards = [];
 let flippedCards = [];
 let matchedPairs = 0;
+let unmatchedPairs = 0;
+let timeIntervalID; // TimeInterval ID
+let timeOutID;  // TimeOut ID
+let timeLeft = 60; // total time for game
+let scores = 0; // At the beginning
 
 // imageMap mapping numbers to flag images
 const imageMap = {
@@ -49,10 +55,14 @@ const laevel2ImageMap = {
 
 // Start game function
 function startGame() {   
+  console.log(scores)
   // Hide header section
   header.style.display = "none";
   // Unhide main section
   main.style.display = "block";
+
+  // Start timer
+  startTimer();
 
   // rest the state of these variables
   cards = [];
@@ -70,12 +80,10 @@ function startGame() {
   // Create the card
   shuffledCardValues.forEach((element, index) => {
     const card = createCard(element);
-    // Staggered transition
-    
+    // Staggered transition    
     setTimeout(() => {
     card.classList.add("slideIn");
-    }, index * 200); 
-    console.log(index)
+    }, index * 200);     
     gameBoard.appendChild(card);
   });
 
@@ -109,10 +117,7 @@ function startGame() {
     // Add flip functionality
     card.addEventListener("click", () => flipCard(card));   
     return card;   
-  }
-
-
-  
+  }  
   
 }
 
@@ -132,7 +137,7 @@ function shuffleCardValues(array) {
 }
 
 // Function to flip the card
-function flipCard(card) {
+function flipCard(card) { 
   if(flippedCards.length < 2 && !card.classList.contains('flipped')) {
     card.classList.add("flipped");
   }
@@ -149,30 +154,127 @@ function checkForMatch() {
   const [card1, card2] = flippedCards;
   if(card1.dataset.value === card2.dataset.value) {
     matchedPairs++;
+    scores = scores + 10;
+    scoresDisplay.textContent = `${scores} points`;
     flippedCards = [];
     // Check if all the cards are flipped
     if(matchedPairs === Object.keys(imageMap).length) {
-      statusMessage.textContent = "Congratulations! You've matched all the cards!";
-      const congratulationsModal = new bootstrap.Modal(document.getElementById('game-over-modal'));
-      congratulationsModal.show();
-      // Unhide restart button
-      restartGameButton.style.display = "block";
-      restartGameButton.innerHTML = `Click to go to level ${++level}`;
+      tidyUp(true)      
     }
   } else {
+    unmatchedPairs++;
+    scores = scores - 2;
+    scoresDisplay.textContent = `${scores} points`;
     setTimeout(() => {
       card1.classList.remove('flipped');
       card2.classList.remove('flipped');
       flippedCards = [];
     }, 1000);
     
+  }  
+}
+
+// start timer function
+function startTimer() {
+  timeDisplay.textContent = `0:${timeLeft} sec.`;
+  timeIntervalID = setInterval(() => {
+    timeLeft--;
+    if(timeLeft < 10) {
+      timeDisplay.textContent = `0:0${timeLeft} sec.`;
+    } else {
+      timeDisplay.textContent = `0:${timeLeft} sec.`;
+    }
+    // Time up?
+    if(timeLeft <= 0) {
+      clearInterval(timeIntervalID); // stops the time
+      tidyUp(false); // Play has lost the game
+    }   
+  }, 1000);
+}
+
+// TidyUp function
+function tidyUp(status) {
+  // Give one more second to tidy up things
+  timeOutID = setTimeout(() => {
+    console.log("TimeUp! Tidy Up.")
+    endGame(status)
+  }, 1000);
+
+}
+
+// endGame function
+function endGame(isWin) {
+  clearInterval(timeIntervalID); // stops the timer  
+  clearTimeout(timeOutID); // stops the timeout
+  // Check the status of each player and give customized message
+  const btnMC = document.getElementById('btn-modal-close');
+ 
+  if(isWin && scores >= 25) {
+      // console.log("Congratulations! You won with high points. Move to the next level")
+      statusMessage.textContent = "Congratulations! You've won the game with good points. Move to the next level.";
+      const congratulationsModal = new bootstrap.Modal(document.getElementById('game-over-modal'));
+      congratulationsModal.show();
+      btnMC.addEventListener('click', () => {
+        // Start game boolean
+        start = false;
+        level = 2;  
+        
+        level2();
+      })
+  } else if (isWin && scores < 25) {
+    //console.log("You won but lower scores. Repeat level 1")
+    statusMessage.textContent = "Congratulations! You won but lower scores. Repeat level 1.";
+    const congratulationsModal = new bootstrap.Modal(document.getElementById('game-over-modal'));
+    congratulationsModal.show();
+    btnMC.addEventListener('click', () => {
+      // Start game boolean
+      start = false;
+      level = 1;
+
+      // Initialize cvariables
+      cards = [];
+      flippedCards = [];
+      matchedPairs = 0;
+      unmatchedPairs = 0;
+      timeIntervalID; // TimeInterval ID
+      timeOutID;  // TimeOut ID
+      timeLeft = 60; // total time for game
+      scores = 0; // At the beginning
+      startGame();
+    })
+  } else {
+    //console.log("You lost! Repeat level 1")
+    statusMessage.textContent = "You lost! Repeat level 1.";
+    const congratulationsModal = new bootstrap.Modal(document.getElementById('game-over-modal'));
+    congratulationsModal.show();
+    btnMC.addEventListener('click', () => {
+      // Start game boolean
+      start = false;
+      level = 1;
+
+      // Initialize cvariables
+      cards = [];
+      flippedCards = [];
+      matchedPairs = 0;
+      unmatchedPairs = 0;
+      timeIntervalID; // TimeInterval ID
+      timeOutID;  // TimeOut ID
+      timeLeft = 60; // total time for game
+      scores = 0; // At the beginning
+      startGame();
+    })    
   }
-
-
   
+  //statusMessage.textContent = "Congratulations! You've matched all the cards!";
+      // const congratulationsModal = new bootstrap.Modal(document.getElementById('game-over-modal'));
+      // congratulationsModal.show();
+      // Unhide restart button
+      //restartGameButton.style.display = "block";
+      // restartGameButton.innerHTML = `Click to go to level ${++level}`;     
+
 }
 
 // Function to play level 2
 function level2() {
-  alert("Starting Level 2");
+  console.log("Starting Level 2");
 }

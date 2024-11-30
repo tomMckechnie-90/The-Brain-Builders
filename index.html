@@ -79,10 +79,7 @@
               <li class="list-group-item">You may wish to play again.</li>
             </ul>
             <div class="d-flex justify-content-center my-5">
-              <button
-                id="start-game-button"
-                class="btn btn-outline-dark btn-lg start-game-button"
-              >
+              <button id="start-game-button" class="btn btn-outline-dark btn-lg start-game-button">
                 Play Now
               </button>
             </div>
@@ -96,8 +93,8 @@
           <div class="col-12">
             <h2 class="text-center">Match The Flags</h2>
             <h3 class="level" id="level"></h3>
-            <h4 id="time">Time: 0:00</h4>
-            <h5 id="score">Score:</h5>
+            <h4>Time Left: <span id="time">0:00</span></h4>
+            <h4>Score: <span  id="scoreLine">0</span></h4>
           </div>
         </div>
         <div class="row justify-content-center text-center">
@@ -108,55 +105,43 @@
             <!--             
             <p id="status-message"></p>
             -->
-            <!-- Modal -->
-            <div
-              class="modal fade"
-              id="game-over-modal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                      Well Done! You have completed Level 1.
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close custom-close-button"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <p id="status-message"></p>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary custom-restart-button"
-                      data-bs-dismiss="modal"
-                      id="restart-game-button"
-                    >
-                      Restart Game
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+           
             <div class="d-flex justify-content-center my-5">
-              <!-- <button
+              <button
                 id="restart-game-button"
                 class="btn btn-outline-dark btn-lg restart-game-button"
               >
                 Restart Game
-              </button> -->
+              </button>
             </div>
           </div>
         </div>
       </div>
+       <!-- Modal -->
+       <div class="modal fade" id="game-over-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                You have completed the game.
+              </h1>
+              <button
+                type="button"
+                class="btn-close custom-close-button"
+                data-bs-dismiss="modal"
+                aria-label="Close">
+              </button>
+            </div>
+            <div class="modal-body">
+              <p id="status-message"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-modal-close">Close</button>                    
+            </div>
+          </div>
+        </div>
+      </div>
+     <!-- end of modal -->
     </main>
 
     <!-- Bootstrap JS -->
