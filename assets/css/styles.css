@@ -39,12 +39,20 @@ header#hero {
   font-weight: bolder;
 }
 
-.game-board {
+/* .game-board {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;   
   margin-top: 20px;
+} */
+
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
 }
 
 /* card container*/
@@ -199,31 +207,30 @@ header#hero {
 
 
 
-/* Media Queries*/
 @media (max-width: 320px) {
-  header#hero {
-    min-height: 60vh;
+  #game-board {
+  display: grid;
+  grid-template-columns: repeat(2, 120px);
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+  }
+
+  .container {
+    text-align: center;
   }
 }
-/* @media (min-width: 720px) {
-  .game-board {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 15px;
-  } */
 
-  /* .card {
-    width: 100%;
-    padding-top: 100%; This maintains a 1:1 aspect ratio
-    position: relative;
-  } */
-
-  /* .card-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+@media (max-width: 568px) {
+  #game-board {
+  display: grid;
+  grid-template-columns: repeat(2, 120px);
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
   }
-} */
+
+  .container {
+    text-align: center;
+  }
+}
