@@ -214,6 +214,7 @@ header#hero {
   gap: 10px;
   margin-top: 20px;
   justify-content: center;
+  min-height: calc(100vh - 40px); /* Adjust height to fit screen */
   }
 
   .container {
@@ -228,6 +229,7 @@ header#hero {
   gap: 10px;
   margin-top: 20px;
   justify-content: center;
+  min-height: calc(100vh - 40px); /* Adjust height to fit screen */
   }
 
   .container {
