@@ -46,7 +46,7 @@ header#hero {
   height: 150px;
   margin: 10px;
   opacity: 0; /* Start hidden */
-  transform: translateY(30px); /* Start slightly offset */
+  transform: translateX(-100%); /* Start slightly offset */
   animation: slide-in 0.5s ease forwards; /* Slide-in animation */
 }
 
@@ -87,11 +87,11 @@ header#hero {
 @keyframes slide-in {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateX(-100%);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 

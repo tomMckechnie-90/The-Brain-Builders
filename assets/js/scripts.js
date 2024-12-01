@@ -2,31 +2,28 @@
 const restartGameButton = document.getElementById("restart-game-button");
 const header = document.getElementById("hero");
 const main = document.getElementById("main");
+const startGameButton = document.getElementById("start-game-btn");
+const gotoPlayboardBtn = document.getElementById('goto-playboard-btn');
+const gameLevel = document.getElementById("level");
+const congratulationsModal = document.getElementById('congratulationsModal');
 
 
-
-// Start button
-//startGameButton.addEventListener("click", startGame);
-// Restart button
-//restartGameButton.addEventListener("click", startGame);
-
+//Goto playboard button
+gotoPlayboardBtn.addEventListener('click', gotoPlayboard);
+// startbutton
+startGameButton.addEventListener('click', startGame);
 // Hide main section
 main.style.display = "none";
-// Hide restart button
-//restartGameButton.style.display = "none";
-// Start game boolean
-//let start = false;
+const modal = new bootstrap.Modal(congratulationsModal);
+modal.hide();
+
+// Initialized shared variables
 let level = 1;
 let scores = 0;
 let timer;
 let timeLeft = 60;
-const gameLevel = document.getElementById("level");
-gameLevel.textContent = `Level ${level}`;
-
-// Shared variables
-// let cards = [];
-// let flippedCards = [];
-// let matchedPairs = 0;
+let matchedPairs = 0;
+let mismatchedPairs = 0;
 
 // imageMap mapping numbers to flag images
 const imageMap = {
@@ -45,20 +42,16 @@ function gotoPlayboard() {
   const header = document.getElementById("hero");  
   header.style.display = "none";
   // Unhide the main section    
-  main.style.display = "block";
-  
+  main.style.display = "block";  
 }
 
 // Start game function
-function startGame() {   
+function startGame() {
   // clear timer ID
   clearTimeout(timer);
-  const gameLevel = document.getElementById("level");
-  gameLevel.textContent = `Level ${level}`;
-
+   
   // reset game
   resetGame();
-
   // Initialize Game Cards
   initializeGameCards(level);
 
@@ -72,6 +65,8 @@ function resetGame() {
   gameBoard.innerHTML = ""; // clear the board for the cards
   scores = 0;
   timeLeft = 60;
+  matchedPairs = 0;
+  mismatchedPairs = 0;
 
   const scoreDisplay = document.getElementById("score");
   const timeDisplay = document.getElementById("time");
@@ -79,21 +74,25 @@ function resetGame() {
   timeDisplay.textContent = `Time Left: ${timeLeft} sec.`;
   scoreDisplay.textContent = `Score: 0 points`;
   statusMessage.textContent = ""; // No messages
-
+  // Change the text on start button
+  startGameButton.textContent = "Restart Game";
+  // Hide modal
+  modal.hide();
 }
 
 // Create and initialize game cards
 function initializeGameCards(level) {
   // Initalize the game board
   const gameBoard = document.getElementById("game-board");
+   // display game level to the player
+   gameLevel.textContent = `Level ${level}`;
 
   // For level 1, 5 pairs = 10 cards, level 2, 6 pairs = 12 cards
   // Level 1 = 1 + 4 = 5, Level 2 = 2 + 4 = 6
   const numOfPairs = level + 4;  
   const all_values_from_pairs = [...Array(numOfPairs).keys(), ...Array(numOfPairs).keys()];
   // Reshuffle these numbers using shufflecardValues
-  const reshuffledCardValues = shuffleCardValues(all_values_from_pairs);
-  console.log(reshuffledCardValues)
+  const reshuffledCardValues = shuffleCardValues(all_values_from_pairs);  
 
   // Create cards from these values for the level
   reshuffledCardValues.forEach((value, index) => {
@@ -123,6 +122,9 @@ function shuffleCardValues(array) {
 // Flip card logic
 let firstCard = null;
 function flipCard(card, value) {
+  console.log("scores: ", scores);
+  console.log("level: ", level);
+  console.log("Matched pairs: ", matchedPairs);
   const cardInner = card.querySelector(".card-inner");
   if (cardInner.classList.contains("flip")) return; // Prevent flipping the same card again
 
@@ -134,6 +136,7 @@ function flipCard(card, value) {
     // Match logic
     if (firstCard.value === value) {
       scores += 10;
+      matchedPairs++;
       const scoreDisplay = document.getElementById("score");
       scoreDisplay.textContent = `Score: ${scores} points`;
       firstCard = null;
@@ -142,6 +145,7 @@ function flipCard(card, value) {
       // Flip back after delay if no match
       setTimeout(() => {
         scores-=1;
+        mismatchedPairs++;
         const scoreDisplay = document.getElementById("score");
         scoreDisplay.textContent = `Score: ${scores} points`;
         firstCard.card.querySelector(".card-inner").classList.remove("flip");
@@ -155,9 +159,10 @@ function flipCard(card, value) {
 // Check if the player has won
 function checkWinCondition() {
   const totalPairs = level + 4;
-  if (scores >= totalPairs * 10) {
+  if (totalPairs === matchedPairs) { // Game is won!
     clearInterval(timer);
-    endGame(true);
+    console.log("starting new level======")
+    endGame(true);    
   }
 }
 
@@ -180,16 +185,13 @@ function endGame(isWin) {
   const statusMessage = document.getElementById("status-message");
   if (isWin) {
     statusMessage.textContent = `Congratulations! You completed Level ${level}`;
+    modal.show();
     level++; // Advance to the next level
     setTimeout(startGame, 3000); // Start the next level after 3 seconds
   } else {
     statusMessage.textContent = `You didn't make it! Try again at Level ${level}`;
+    modal.show();
     setTimeout(startGame, 3000); // Restart the current level
   }
 }
 
-// Start game
-const startGameButton = document.getElementById("start-game-btn");
-startGameButton.addEventListener('click', startGame);
-// Goto playboard button
-document.getElementById('goto-playboard-btn').addEventListener('click', gotoPlayboard)
