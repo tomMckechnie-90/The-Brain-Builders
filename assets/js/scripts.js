@@ -39,7 +39,9 @@ const imageMap = {
   3: "assets/images/germany.png",
   4: "assets/images/italy.png",
   5: "assets/images/norway.png",
-  
+  6: "assets/images/portugal.png",
+  7: "assets/images/spain.png",
+  8: "assets/images/sweden.png"
 }
 
 const laevel2ImageMap = {
