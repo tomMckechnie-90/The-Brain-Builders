@@ -27,7 +27,6 @@ This project is a Flip and Match Cards game called the Brain Builders Game. It e
 
 ## Design
 
-
 ### Wireframes
 
 ![mobile-wireframe](/assets/images/mobile-wireframe.PNG)
@@ -51,7 +50,6 @@ This project is a Flip and Match Cards game called the Brain Builders Game. It e
 
 ## Testing and Validation
 
-
 ### Testing Results
 
 All game functionalities were manually tested:
@@ -64,7 +62,14 @@ All game functionalities were manually tested:
 
 ### Validation
 
+- HTML validator
+![html-validator](/assets/images/html-validator.PNG)
 
+- CSS validator
+![css-validator]()
+
+- Javascript validator
+![javascript-validator]()
 
 ## Deployment
 

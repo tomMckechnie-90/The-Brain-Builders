@@ -13,7 +13,7 @@ gotoPlayboardBtn.addEventListener('click', gotoPlayboard);
 // startbutton
 startGameButton.addEventListener('click', startGame);
 // modalcontinue Button
-modalContinueBtn.addEventListener('click', continueNextOrRepeat)
+modalContinueBtn.addEventListener('click', continueNextOrRepeat);
 // Hide main section
 main.style.display = "none";
 const modal = new bootstrap.Modal(congratulationsModal);
@@ -37,7 +37,7 @@ const imageMap = {
   5: "assets/images/portugal.png",
   6: "assets/images/spain.png",
   7: "assets/images/sweden.png",  
-}
+} ;
 
 function gotoPlayboard() {  
   // Hide header section
