@@ -1,4 +1,3 @@
-
 const header = document.getElementById("hero");
 const main = document.getElementById("main");
 const startGameButton = document.getElementById("start-game-btn");
@@ -13,7 +12,7 @@ gotoPlayboardBtn.addEventListener('click', gotoPlayboard);
 // startbutton
 startGameButton.addEventListener('click', startGame);
 // modalcontinue Button
-modalContinueBtn.addEventListener('click', continueNextOrRepeat)
+modalContinueBtn.addEventListener('click', continueNextOrRepeat);
 // Hide main section
 main.style.display = "none";
 const modal = new bootstrap.Modal(congratulationsModal);
@@ -37,7 +36,7 @@ const imageMap = {
   5: "assets/images/portugal.png",
   6: "assets/images/spain.png",
   7: "assets/images/sweden.png",  
-}
+} ;
 
 function gotoPlayboard() {  
   // Hide header section
@@ -143,14 +142,18 @@ function flipCard(card, value) {
     } else {
       // Flip back after delay if no match
       setTimeout(() => {
-        scores-=1;
+        if (scores > 0) {
+          scores -= 1;
+        }
         mismatchedPairs++;
         const scoreDisplay = document.getElementById("score");
         scoreDisplay.textContent = `Score: ${scores} points`;
-        firstCard.card.querySelector(".card-inner").classList.remove("flip");
+        if (firstCard && firstCard.card) {
+          firstCard.card.querySelector(".card-inner").classList.remove("flip");
+        }
         cardInner.classList.remove("flip");
-        firstCard = null;
-      }, 1000);
+        firstCard = null; // Reset firstCard after flipping back
+      }, 1000); // Adjust delay as needed
     }
   }
 }
@@ -184,6 +187,9 @@ function endGame(isWin) {
   if (isWin) {
     statusMessage.textContent = `Congratulations! You completed Level ${level}`;    
     level++; // Advance to the next level
+    if (level > 4) {
+      level = 4;
+    }
     modalContinueBtn.textContent = `Click to go to level ${level}`;   
     modal.show(); 
   } else {
