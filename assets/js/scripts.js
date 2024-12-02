@@ -1,4 +1,3 @@
-
 const header = document.getElementById("hero");
 const main = document.getElementById("main");
 const startGameButton = document.getElementById("start-game-btn");
@@ -145,14 +144,16 @@ function flipCard(card, value) {
     } else {
       // Flip back after delay if no match
       setTimeout(() => {
-        scores-=1;
+        scores -= 1;
         mismatchedPairs++;
         const scoreDisplay = document.getElementById("score");
         scoreDisplay.textContent = `Score: ${scores} points`;
-        firstCard.card.querySelector(".card-inner").classList.remove("flip");
+        if (firstCard && firstCard.card) {
+          firstCard.card.querySelector(".card-inner").classList.remove("flip");
+        }
         cardInner.classList.remove("flip");
-        firstCard = null;
-      }, 1000);
+        firstCard = null; // Reset firstCard after flipping back
+      }, 1000); // Adjust delay as needed
     }
   }
 }
