@@ -89,7 +89,7 @@ header#hero {
   height: 100%;
   position: relative;
   transform-style: preserve-3d; /* Responsible for 3d transformation */
-  transition: transform 0.6s;
+  /* transition: transform 0.6s; */
 }
 
 /* Front and Back Faces*/
@@ -110,8 +110,8 @@ header#hero {
 
 /* Front Face (Shows "?") */
 .card-front {
-  background-color: #98ff98; /* Light gray background */
-  color: #ffffff;           /* Dark text */
+  background-color: #98ff98;
+  color: #ffffff;           
   z-index: 2;
   border: 1px solid #98ff98;
 }
