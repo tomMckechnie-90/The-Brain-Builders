@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/styles.css" />
     <!-- Favicon -->
@@ -27,11 +32,16 @@
     />
     <title>Brain Builders Game</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
-  <body>    
+  <body>
     <header id="hero">
       <div class="container">
         <div class="row justify-content-center text-center">
@@ -48,14 +58,23 @@
             <h2>Game instructions:</h2>
             <ul class="list-group custom-list-bg">
               <li class="list-group-item">Turn two cards.</li>
-              <li class="list-group-item">If they match you get points and the cards remain open.</li>
+              <li class="list-group-item">
+                If they match you get points and the cards remain open.
+              </li>
               <li class="list-group-item">No points if they do not match.</li>
-              <li class="list-group-item">When you flip all the cards and they match, you have won!</li>
+              <li class="list-group-item">
+                When you flip all the cards and they match, you have won!
+              </li>
               <li class="list-group-item">You may wish to play again.</li>
-            </ul>  
+            </ul>
             <div class="d-flex justify-content-center my-5">
-              <button id="goto-playboard-btn" class="btn btn-outline-dark btn-lg start-game-button">Go to Playbord </button>
-            </div>           
+              <button
+                id="goto-playboard-btn"
+                class="btn btn-outline-dark btn-lg start-game-button"
+              >
+                Go to Playbord
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -65,32 +84,54 @@
         <div class="row">
           <div class="col-12">
             <h2 class="text-center">Match The Flags</h2>
-            <h3 class="level" id="level"></h3>
+            <h3 class="level" id="level">0</h3>
             <h4 id="time">Time: 0:00</h4>
-            <h4 id="score">Score: 0</h4>           
-          </div> 
-          <div class="col-12">
-            <div id="game-board" class="game-board row justify-content-center"></div> 
-          </div> 
-          <div class="col-12">
-            <button id="start-game-btn" class="btn btn-outline-dark btn-lg start-game-btn my-5">Start Game</button>     
+            <h4 id="score">Score: 0</h4>
           </div>
-        </div>                    
-      </div>                               
+          <div class="col-12">
+            <div
+              id="game-board"
+              class="game-board row justify-content-center"
+            ></div>
+          </div>
+          <div class="col-12">
+            <button
+              id="start-game-btn"
+              class="btn btn-outline-dark btn-lg start-game-btn my-5"
+            >
+              Start Game
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
     <!-- Full screen Modal -->
-    <div class="modal fade" id="congratulationsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="congratulationsModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h2 class="modal-title fs-5" id="exampleModalLabel" >Your Game Results:</h2>           
+            <h2 class="modal-title fs-5" id="exampleModalLabel">
+              Your Game Results:
+            </h2>
           </div>
           <div class="modal-body">
-           <h5><p id="status-message"></p></h5>           
-          </div>  
+            <h5 id="status-message">0</h5>
+          </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="modal-continue-btn">Start level</button>
-          </div>        
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="modal-continue-btn"
+            >
+              Start level
+            </button>
+          </div>
         </div>
       </div>
     </div>
