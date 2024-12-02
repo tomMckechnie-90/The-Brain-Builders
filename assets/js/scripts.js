@@ -90,6 +90,7 @@ function initializeGameCards(level) {
 
   // For level 1, 5 pairs = 10 cards, level 2, 6 pairs = 12 cards
   // Level 1 = 1 + 4 = 5, Level 2 = 2 + 4 = 6
+  
   const numOfPairs = level + 4;  
   const all_values_from_pairs = [...Array(numOfPairs).keys(), ...Array(numOfPairs).keys()];
   // Reshuffle these numbers using shufflecardValues
@@ -123,9 +124,6 @@ function shuffleCardValues(array) {
 // Flip card logic
 let firstCard = null;
 function flipCard(card, value) {
-  console.log("scores: ", scores);
-  console.log("level: ", level);
-  console.log("Matched pairs: ", matchedPairs);
   const cardInner = card.querySelector(".card-inner");
   if (cardInner.classList.contains("flip")) return; // Prevent flipping the same card again
 
@@ -195,7 +193,7 @@ function endGame(isWin) {
   }
 }
 
-function continueNextOrRepeat(status) {
+function continueNextOrRepeat() {
  startGame();
 }
 
