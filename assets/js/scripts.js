@@ -1,132 +1,113 @@
-const startGameButton = document.getElementById("start-game-button");
+
 const restartGameButton = document.getElementById("restart-game-button");
 const header = document.getElementById("hero");
 const main = document.getElementById("main");
-const gameBoard = document.getElementById("game-board");
-const statusMessage = document.getElementById("status-message");
+const startGameButton = document.getElementById("start-game-btn");
+const gotoPlayboardBtn = document.getElementById('goto-playboard-btn');
 const gameLevel = document.getElementById("level");
-const timeDisplay = document.getElementById("time");
-const scoresDisplay = document.getElementById("scoreLine");
+const congratulationsModal = document.getElementById('congratulationsModal');
 
-// Start button
-startGameButton.addEventListener("click", startGame);
-// Restart button
-restartGameButton.addEventListener("click", startGame);
 
+//Goto playboard button
+gotoPlayboardBtn.addEventListener('click', gotoPlayboard);
+// startbutton
+startGameButton.addEventListener('click', startGame);
 // Hide main section
 main.style.display = "none";
-// Hide restart button
-restartGameButton.style.display = "none";
-// Start game boolean
-let start = false;
-let level = 1;
-gameLevel.textContent = `Level ${level}`;
+const modal = new bootstrap.Modal(congratulationsModal);
+modal.hide();
 
-// Shared variables
-let cards = [];
-let flippedCards = [];
+// Initialized shared variables
+let level = 1;
+let scores = 0;
+let timer;
+let timeLeft = 60;
 let matchedPairs = 0;
-let unmatchedPairs = 0;
-let timeIntervalID; // TimeInterval ID
-let timeOutID;  // TimeOut ID
-let timeLeft = 60; // total time for game
-let scores = 0; // At the beginning
+let mismatchedPairs = 0;
 
 // imageMap mapping numbers to flag images
 const imageMap = {
-  1: "assets/images/czech_republic.png",
-  2: "assets/images/france.png",
-  3: "assets/images/germany.png",
-  4: "assets/images/italy.png",
-  5: "assets/images/norway.png",
-  6: "assets/images/portugal.png",
-  7: "assets/images/spain.png",
-  8: "assets/images/sweden.png"
+  0: "assets/images/czech_republic.png",
+  1: "assets/images/france.png",
+  2: "assets/images/germany.png",
+  3: "assets/images/italy.png",
+  4: "assets/images/norway.png",
+  5: "assets/images/portugal.png",
+  6: "assets/images/spain.png",
+  7: "assets/images/sweden.png",  
 }
 
-const laevel2ImageMap = {
-  1: "assets/images/czech_republic.png",
-  2: "assets/images/france.png",
-  3: "assets/images/germany.png",
-  4: "assets/images/italy.png",
-  5: "assets/images/norway.png",
-  6: "assets/images/portugal.png",
-  7: "assets/images/spain.png",
-  8: "assets/images/sweden.png"
+function gotoPlayboard() {  
+  // Hide header section
+  const header = document.getElementById("hero");  
+  header.style.display = "none";
+  // Unhide the main section    
+  main.style.display = "block";  
 }
 
 // Start game function
-function startGame() {   
-  console.log(scores)
-  // Hide header section
-  header.style.display = "none";
-  // Unhide main section
-  main.style.display = "block";
+function startGame() {
+  // clear timer ID
+  clearTimeout(timer);
+   
+  // reset game
+  resetGame();
+  // Initialize Game Cards
+  initializeGameCards(level);
 
-  // Start timer
-  startTimer();
-
-  // rest the state of these variables
-  cards = [];
-  flippedCards = [];
-  matchedPairs = 0;
-  start = true; // Game started, turn start to true   
-  
-  gameBoard.innerHTML = ""; // clear the board for the cards
-  // Generate values for the cards
-  const generatedCardValues = generateCardValues();
-  // Shuffle the numbers
-  const shuffledCardValues = shuffleCardValues(generatedCardValues); 
-  
-
-  // Create the card
-  shuffledCardValues.forEach((element, index) => {
-    const card = createCard(element);
-    // Staggered transition    
-    setTimeout(() => {
-    card.classList.add("slideIn");
-    }, index * 200);     
-    gameBoard.appendChild(card);
-  });
-
-  // this function creates a card
-  function createCard(value) {
-    const card = document.createElement("div");
-    card.classList.add("card");
-    card.dataset.value = value;
-
-    // inner div in card
-    const cardInner = document.createElement("div");
-    cardInner.classList.add("card-inner");
-    // front div with class and content 
-    const cardFront = document.createElement("div");
-    cardFront.classList.add("card-front");
-    cardFront.textContent = "?"; // Question mark on front
-
-    // back div with flag image
-    const cardBack = document.createElement("div");
-    cardBack.classList.add("card-back");
-    const img = document.createElement("img");
-    img.src = imageMap[value]; // Use the image map to assign the correct image
-    img.alt = "Flag";
-    cardBack.appendChild(img);
-
-    // inner div should contain front and back divs which should go inside card
-    cardInner.appendChild(cardFront);
-    cardInner.appendChild(cardBack);
-    card.appendChild(cardInner);
-
-    // Add flip functionality
-    card.addEventListener("click", () => flipCard(card));   
-    return card;   
-  }  
-  
+  // Start the timer
+  startTimer();  
 }
 
-// Function to generate card values
-function generateCardValues() {
-  const values = Object.keys(imageMap); // list the key
-  return [...values, ...values]; // Unpack the array and return two times
+// Reset game function. This reset the state of the game
+function resetGame() {
+  const gameBoard = document.getElementById("game-board");
+  gameBoard.innerHTML = ""; // clear the board for the cards
+  scores = 0;
+  timeLeft = 60;
+  matchedPairs = 0;
+  mismatchedPairs = 0;
+
+  const scoreDisplay = document.getElementById("score");
+  const timeDisplay = document.getElementById("time");
+  const statusMessage = document.getElementById("status-message");
+  timeDisplay.textContent = `Time Left: ${timeLeft} sec.`;
+  scoreDisplay.textContent = `Score: 0 points`;
+  statusMessage.textContent = ""; // No messages
+  // Change the text on start button
+  startGameButton.textContent = "Restart Game";
+  // Hide modal
+  modal.hide();
+}
+
+// Create and initialize game cards
+function initializeGameCards(level) {
+  // Initalize the game board
+  const gameBoard = document.getElementById("game-board");
+   // display game level to the player
+   gameLevel.textContent = `Level ${level}`;
+
+  // For level 1, 5 pairs = 10 cards, level 2, 6 pairs = 12 cards
+  // Level 1 = 1 + 4 = 5, Level 2 = 2 + 4 = 6
+  const numOfPairs = level + 4;  
+  const all_values_from_pairs = [...Array(numOfPairs).keys(), ...Array(numOfPairs).keys()];
+  // Reshuffle these numbers using shufflecardValues
+  const reshuffledCardValues = shuffleCardValues(all_values_from_pairs);  
+
+  // Create cards from these values for the level
+  reshuffledCardValues.forEach((value, index) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.style.animationDelay = `${index * 0.1}s`; // This gives the card class staggered dealy for transition animation
+    card.innerHTML = `
+     <div class="card-inner">
+        <div class="card-front">?</div>
+        <div class="card-back"><img src="${imageMap[value]}" alt="Card ${value}"></div>
+      </div>
+    `;
+    card.addEventListener('click', () => flipCard(card, value));
+    gameBoard.appendChild(card);    
+  });
 }
 
 // Function to shuffle card numbers (Fisher-Yates algorithm)
@@ -138,145 +119,79 @@ function shuffleCardValues(array) {
   return array;
 }
 
-// Function to flip the card
-function flipCard(card) { 
-  if(flippedCards.length < 2 && !card.classList.contains('flipped')) {
-    card.classList.add("flipped");
-  }
-  flippedCards.push(card);
+// Flip card logic
+let firstCard = null;
+function flipCard(card, value) {
+  console.log("scores: ", scores);
+  console.log("level: ", level);
+  console.log("Matched pairs: ", matchedPairs);
+  const cardInner = card.querySelector(".card-inner");
+  if (cardInner.classList.contains("flip")) return; // Prevent flipping the same card again
 
-  if(flippedCards.length === 2) {
-    checkForMatch();
-  }
-  
-}
+  cardInner.classList.add("flip");
 
-// Function to check if the flipped cards match
-function checkForMatch() {
-  const [card1, card2] = flippedCards;
-  if(card1.dataset.value === card2.dataset.value) {
-    matchedPairs++;
-    scores = scores + 10;
-    scoresDisplay.textContent = `${scores} points`;
-    flippedCards = [];
-    // Check if all the cards are flipped
-    if(matchedPairs === Object.keys(imageMap).length) {
-      tidyUp(true)      
-    }
+  if (!firstCard) {
+    firstCard = { card, value };
   } else {
-    unmatchedPairs++;
-    scores = scores - 2;
-    scoresDisplay.textContent = `${scores} points`;
-    setTimeout(() => {
-      card1.classList.remove('flipped');
-      card2.classList.remove('flipped');
-      flippedCards = [];
-    }, 1000);
-    
-  }  
-}
-
-// start timer function
-function startTimer() {
-  timeDisplay.textContent = `0:${timeLeft} sec.`;
-  timeIntervalID = setInterval(() => {
-    timeLeft--;
-    if(timeLeft < 10) {
-      timeDisplay.textContent = `0:0${timeLeft} sec.`;
+    // Match logic
+    if (firstCard.value === value) {
+      scores += 10;
+      matchedPairs++;
+      const scoreDisplay = document.getElementById("score");
+      scoreDisplay.textContent = `Score: ${scores} points`;
+      firstCard = null;
+      checkWinCondition();
     } else {
-      timeDisplay.textContent = `0:${timeLeft} sec.`;
+      // Flip back after delay if no match
+      setTimeout(() => {
+        scores-=1;
+        mismatchedPairs++;
+        const scoreDisplay = document.getElementById("score");
+        scoreDisplay.textContent = `Score: ${scores} points`;
+        firstCard.card.querySelector(".card-inner").classList.remove("flip");
+        cardInner.classList.remove("flip");
+        firstCard = null;
+      }, 1000);
     }
-    // Time up?
-    if(timeLeft <= 0) {
-      clearInterval(timeIntervalID); // stops the time
-      tidyUp(false); // Play has lost the game
-    }   
-  }, 1000);
-}
-
-// TidyUp function
-function tidyUp(status) {
-  // Give one more second to tidy up things
-  timeOutID = setTimeout(() => {
-    console.log("TimeUp! Tidy Up.")
-    endGame(status)
-  }, 1000);
-
-}
-
-// endGame function
-function endGame(isWin) {
-  clearInterval(timeIntervalID); // stops the timer  
-  clearTimeout(timeOutID); // stops the timeout
-  // Check the status of each player and give customized message
-  const btnMC = document.getElementById('btn-modal-close');
- 
-  if(isWin && scores >= 25) {
-      // console.log("Congratulations! You won with high points. Move to the next level")
-      statusMessage.textContent = "Congratulations! You've won the game with good points. Move to the next level.";
-      const congratulationsModal = new bootstrap.Modal(document.getElementById('game-over-modal'));
-      congratulationsModal.show();
-      btnMC.addEventListener('click', () => {
-        // Start game boolean
-        start = false;
-        level = 2;  
-        
-        level2();
-      })
-  } else if (isWin && scores < 25) {
-    //console.log("You won but lower scores. Repeat level 1")
-    statusMessage.textContent = "Congratulations! You won but lower scores. Repeat level 1.";
-    const congratulationsModal = new bootstrap.Modal(document.getElementById('game-over-modal'));
-    congratulationsModal.show();
-    btnMC.addEventListener('click', () => {
-      // Start game boolean
-      start = false;
-      level = 1;
-
-      // Initialize cvariables
-      cards = [];
-      flippedCards = [];
-      matchedPairs = 0;
-      unmatchedPairs = 0;
-      timeIntervalID; // TimeInterval ID
-      timeOutID;  // TimeOut ID
-      timeLeft = 60; // total time for game
-      scores = 0; // At the beginning
-      startGame();
-    })
-  } else {
-    //console.log("You lost! Repeat level 1")
-    statusMessage.textContent = "You lost! Repeat level 1.";
-    const congratulationsModal = new bootstrap.Modal(document.getElementById('game-over-modal'));
-    congratulationsModal.show();
-    btnMC.addEventListener('click', () => {
-      // Start game boolean
-      start = false;
-      level = 1;
-
-      // Initialize cvariables
-      cards = [];
-      flippedCards = [];
-      matchedPairs = 0;
-      unmatchedPairs = 0;
-      timeIntervalID; // TimeInterval ID
-      timeOutID;  // TimeOut ID
-      timeLeft = 60; // total time for game
-      scores = 0; // At the beginning
-      startGame();
-    })    
   }
-  
-  //statusMessage.textContent = "Congratulations! You've matched all the cards!";
-      // const congratulationsModal = new bootstrap.Modal(document.getElementById('game-over-modal'));
-      // congratulationsModal.show();
-      // Unhide restart button
-      //restartGameButton.style.display = "block";
-      // restartGameButton.innerHTML = `Click to go to level ${++level}`;     
-
 }
 
-// Function to play level 2
-function level2() {
-  console.log("Starting Level 2");
+// Check if the player has won
+function checkWinCondition() {
+  const totalPairs = level + 4;
+  if (totalPairs === matchedPairs) { // Game is won!
+    clearInterval(timer);
+    console.log("starting new level======")
+    endGame(true);    
+  }
 }
+
+// Timer
+function startTimer() {
+  clearInterval(timer);
+  timer = setInterval(() => {
+    timeLeft--;
+    const timeDisplay = document.getElementById("time");
+    timeDisplay.textContent = `Time Left: ${timeLeft} sec.`;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      endGame(false);
+    }
+  }, 1000);
+}
+
+// End the game
+function endGame(isWin) {
+  const statusMessage = document.getElementById("status-message");
+  if (isWin) {
+    statusMessage.textContent = `Congratulations! You completed Level ${level}`;
+    modal.show();
+    level++; // Advance to the next level
+    setTimeout(startGame, 3000); // Start the next level after 3 seconds
+  } else {
+    statusMessage.textContent = `You didn't make it! Try again at Level ${level}`;
+    modal.show();
+    setTimeout(startGame, 3000); // Restart the current level
+  }
+}
+
