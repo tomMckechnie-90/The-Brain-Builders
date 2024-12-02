@@ -1,17 +1,19 @@
 
-const restartGameButton = document.getElementById("restart-game-button");
 const header = document.getElementById("hero");
 const main = document.getElementById("main");
 const startGameButton = document.getElementById("start-game-btn");
 const gotoPlayboardBtn = document.getElementById('goto-playboard-btn');
 const gameLevel = document.getElementById("level");
 const congratulationsModal = document.getElementById('congratulationsModal');
+const modalContinueBtn = document.getElementById("modal-continue-btn");
 
 
 //Goto playboard button
 gotoPlayboardBtn.addEventListener('click', gotoPlayboard);
 // startbutton
 startGameButton.addEventListener('click', startGame);
+// modalcontinue Button
+modalContinueBtn.addEventListener('click', continueNextOrRepeat)
 // Hide main section
 main.style.display = "none";
 const modal = new bootstrap.Modal(congratulationsModal);
@@ -39,7 +41,7 @@ const imageMap = {
 
 function gotoPlayboard() {  
   // Hide header section
-  const header = document.getElementById("hero");  
+  const header = document.getElementById("hero");    
   header.style.display = "none";
   // Unhide the main section    
   main.style.display = "block";  
@@ -48,8 +50,7 @@ function gotoPlayboard() {
 // Start game function
 function startGame() {
   // clear timer ID
-  clearTimeout(timer);
-   
+  clearTimeout(timer);   
   // reset game
   resetGame();
   // Initialize Game Cards
@@ -97,7 +98,7 @@ function initializeGameCards(level) {
   // Create cards from these values for the level
   reshuffledCardValues.forEach((value, index) => {
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = "card col-sm-6 col-md-4 col-lg-3";
     card.style.animationDelay = `${index * 0.1}s`; // This gives the card class staggered dealy for transition animation
     card.innerHTML = `
      <div class="card-inner">
@@ -105,7 +106,7 @@ function initializeGameCards(level) {
         <div class="card-back"><img src="${imageMap[value]}" alt="Card ${value}"></div>
       </div>
     `;
-    card.addEventListener('click', () => flipCard(card, value));
+    card.addEventListener('click', () => flipCard(card, value));    
     gameBoard.appendChild(card);    
   });
 }
@@ -161,7 +162,6 @@ function checkWinCondition() {
   const totalPairs = level + 4;
   if (totalPairs === matchedPairs) { // Game is won!
     clearInterval(timer);
-    console.log("starting new level======")
     endGame(true);    
   }
 }
@@ -184,14 +184,18 @@ function startTimer() {
 function endGame(isWin) {
   const statusMessage = document.getElementById("status-message");
   if (isWin) {
-    statusMessage.textContent = `Congratulations! You completed Level ${level}`;
-    modal.show();
+    statusMessage.textContent = `Congratulations! You completed Level ${level}`;    
     level++; // Advance to the next level
-    setTimeout(startGame, 3000); // Start the next level after 3 seconds
+    modalContinueBtn.textContent = `Click to go to level ${level}`;   
+    modal.show(); 
   } else {
     statusMessage.textContent = `You didn't make it! Try again at Level ${level}`;
-    modal.show();
-    setTimeout(startGame, 3000); // Restart the current level
+    modalContinueBtn.textContent = `Click to go to level ${level}`;    
+    modal.show();    
   }
+}
+
+function continueNextOrRepeat(status) {
+ startGame();
 }
 
