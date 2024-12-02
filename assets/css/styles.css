@@ -32,24 +32,40 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
     margin: 1rem 0;
 }
+.score {
+  text-align: right;
+  margin-right: 1rem;
+}
 
 header#hero {
   min-height: 60vh;
 }
 
-#game-board {  
-  
+.custom-list-bg .list-group-item {
+  background-color: #87ceeb;
+  border: none;
+  color: #ffffff;
+  font-weight: bolder;
+}
+
+#game-board {
+  display: grid;
+  /* grid-template-columns: repeat(4, 120px); */
+  gap: 10px;
+  /* margin-top: 20px; */
+  justify-content: center;
 }
 
 .card {
+  width: 90px;
+  height: 90px;
   perspective: 1000px;
   padding: 0;
-  width: 100px;
-  height: 140px;
-  margin: 10px;
+  /* margin: 10px; */
   opacity: 0; /* Start hidden */
   transform: translatex(-100%); /* Start slightly offset */
   animation: slide-in 0.6s ease forwards; /* Slide-in animation */
+  cursor: pointer;
 }
 
 .card-inner {
@@ -73,7 +89,9 @@ header#hero {
 }
 
 .card-front {
-  background: #ccc;
+  background-color: #98ff98;
+  color: #ffffff;
+  border: 1px solid #98ff98;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,12 +108,72 @@ header#hero {
   height: 100%;  
 } 
 
-#congratulationsModal h2 {
-  color: red;
+.modal-content {
+  background-color: #87ceeb;
+  color: #ffffff;
+  border: none;
 }
 
-#congratulationsModal h5 {
-  color: red;
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+.modal-title {
+  color: #ffffff;
+}
+
+.modal-body {
+  color: #ffffff;
+}
+
+/* Target the modal button */
+#modal-continue-btn {
+  background-color: #98ff98; /* Custom background color */
+  border-color: #98ff98; /* Custom border color */
+  color: #ffffff; /* Custom text color */
+  font-weight: bold; /* Make text bold */
+  padding: 10px 20px; /* Adjust padding */
+  border-radius: 5px; /* Rounded corners */
+}
+
+#modal-continue-btn:hover {
+  background-color: #ffffff; /* Change background color on hover */
+  color: #98ff98; /* Change text color on hover */
+  border-color: #ffffff; /* Change border color on hover */
+}
+
+#goto-playboard-btn {
+  background-color: #98ff98; /* Custom background color */
+  border-color: #98ff98; /* Custom border color */
+  color: #ffffff; /* Custom text color */
+  font-weight: bold; /* Make text bold */
+  padding: 10px 20px; /* Adjust padding */
+  border-radius: 5px; /* Rounded corners */
+}
+
+#goto-playboard-btn:hover {
+  background-color: #ffffff; /* Change background color on hover */
+  color: #98ff98; /* Change text color on hover */
+  border-color: #ffffff; /* Change border color on hover */
+}
+
+#start-game-btn {
+  background-color: #98ff98; /* Custom background color */
+  border-color: #98ff98; /* Custom border color */
+  color: #ffffff; /* Custom text color */
+  font-weight: bold; /* Make text bold */
+  padding: 10px 20px; /* Adjust padding */
+  border-radius: 5px; /* Rounded corners */
+}
+
+#start-game-btn:hover {
+  background-color: #ffffff; /* Change background color on hover */
+  color: #98ff98; /* Change text color on hover */
+  border-color: #ffffff; /* Change border color on hover */
 }
 
 
@@ -111,3 +189,32 @@ header#hero {
   }
 }
 
+/* Media Queries */
+
+@media (max-width: 768px) {
+  #game-board {
+      grid-template-columns: repeat(4, 90px);
+      /* Adjust column count */
+  }
+
+  .card {
+      width: 100px;
+      /* Adjust card size */
+      height: 100px;
+  }
+}
+
+
+
+@media (min-width: 320px) {
+  #game-board {
+      grid-template-columns: repeat(4, 70px);
+      /* Adjust column count */
+  }
+
+  .card {
+      width: 60px;
+      /* Adjust card size */
+      height: 60px;
+  }
+}
