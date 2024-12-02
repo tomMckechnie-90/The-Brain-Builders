@@ -37,13 +37,13 @@ header#hero {
   min-height: 60vh;
 }
 
-.custom-list-bg .list-group-item {
-  /* min-height: 60vh; */
+/* .custom-list-bg .list-group-item {
+  min-height: 60vh;
   background-color: #87ceeb;
   border: none;
   color: #ffffff;
   font-weight: bolder;
-}
+} */
 
 /* .game-board {
   display: flex;
