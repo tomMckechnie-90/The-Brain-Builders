@@ -1,4 +1,3 @@
-
 /* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Protest+Revolution&display=swap');
 
@@ -19,7 +18,13 @@ body {
     line-height: 1.6;
     color: #ffffff;
     background-color: #87ceeb;
-}   
+    text-align: center;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Protest Revolution', sans-serif;
@@ -32,35 +37,59 @@ header#hero {
   min-height: 60vh;
 }
 
-/* .custom-list-bg .list-group-item { 
+/* .custom-list-bg .list-group-item {
   min-height: 60vh;
   background-color: #87ceeb;
   border: none;
   color: #ffffff;
   font-weight: bolder;
-}  */
+} */
 
+/* .game-board {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;   
+  margin-top: 20px;
+} */
+
+#gane-container {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+#game-board {
+  display: grid;
+  /* grid-template-columns: repeat(4, 120px); */
+  gap: 10px;
+  /* margin-top: 20px; */
+  justify-content: center;
+}
+
+/* card container*/
 .card {
-  perspective: 1000px;
-  width: 100px;
-  height: 150px;
-  margin: 10px;
-  opacity: 0; /* Start hidden */
-  transform: translateX(-100%); /* Start slightly offset */
-  animation: slide-in 0.5s ease forwards; /* Slide-in animation */
+  width: 90px;
+  height: 90px;
+  border: 1px solid #ccc; /* test and remove */
+  perspective: 1000px; 
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  opacity: 0; /* opacity of 0 is hidden */
+  transform: translateX(-100%);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+
 }
 
 .card-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.5s;
-}
-
-
-.card-inner.flip {
-  transform: rotateY(180deg);
+  position: relative;
+  transform-style: preserve-3d; /* Responsible for 3d transformation */
+  /* transition: transform 0.6s; */
 }
 
 .card-front,
@@ -72,11 +101,10 @@ header#hero {
 }
 
 .card-front {
-  background: #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
+  background-color: #98ff98;
+  color: #ffffff;           
+  z-index: 2;
+  border: 1px solid #98ff98;
 }
 
 .card-back {
@@ -129,15 +157,81 @@ header#hero {
   border: 1px solid #98ff98;
 } 
 
+/* Bootstrap Modal Custom Styles */
+.modal-content {
+  background-color: #87ceeb; /* Sky blue background */
+  color: #ffffff; /* White text */
+  border-radius: 10px; /* Rounded corners */
+  border: none; /* Remove default border */
+}
 
+.modal-header {
+  border-bottom: none; /* Remove default header border */
+}
+
+.modal-footer {
+  border-top: none; /* Remove default footer border */
+}
+
+.modal-title {
+  font-family: 'Protest Revolution', sans-serif; /* Custom font */
+  font-size: 1.5rem; /* Larger title */
+}
+
+.modal-body {
+  font-family: 'Noto Serif', serif; /* Custom font */
+  font-size: 1rem; /* Standard body text size */
+}
+
+
+
+.custom-restart-button {
+  background-color: #98ff98;
+  border: #98ff98;
+}
+
+.custom-restart-button:hover {
+  background-color: #ffffff;
+  border: #98ff98;
+  color: #98ff98;
+}
+
+
+.custom-close-button {
+  background-color: #98ff98;
+  color: white;
+}
 
 #status-message {
   margin-top: 20px;
   font-size: 18px;
   font-weight: bold;
-  color: #6c757d;
+  color: #ffffff
 }
 
 
 
+/* Media Queries */
+
+@media (max-width: 768px) {
+  #game-board {
+    grid-template-columns: repeat(4, 90px); /* Adjust column count */
+  }
+  .card {
+    width: 100px; /* Adjust card size */
+    height: 100px;
+  }
+}
+
+
+
+@media (min-width: 320px) {
+  #game-board {
+    grid-template-columns: repeat(4, 70px); /* Adjust column count */
+  }
+  .card {
+    width: 60px; /* Adjust card size */
+    height: 60px;
+  }
+}
 
