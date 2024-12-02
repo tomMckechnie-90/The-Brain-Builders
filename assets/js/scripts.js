@@ -187,6 +187,9 @@ function endGame(isWin) {
   if (isWin) {
     statusMessage.textContent = `Congratulations! You completed Level ${level}`;    
     level++; // Advance to the next level
+    if (level > 4) {
+      level = 4;
+    }
     modalContinueBtn.textContent = `Click to go to level ${level}`;   
     modal.show(); 
   } else {
