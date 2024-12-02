@@ -54,7 +54,7 @@
               <li class="list-group-item">You may wish to play again.</li>
             </ul>  
             <div class="d-flex justify-content-center my-5">
-              <button id="start-game-button" class="btn btn-outline-dark btn-lg start-game-button">Play Now</button>
+              <button id="goto-playboard-btn" class="btn btn-outline-dark btn-lg start-game-button">Go to Playbord </button>
             </div>           
           </div>
         </div>
@@ -67,32 +67,30 @@
             <h2 class="text-center">Match The Flags</h2>
             <h3 class="level" id="level"></h3>
             <h4 id="time">Time: 0:00</h4>
-            <h5 id="score">Score: 0</h5>           
-          </div>  
-        </div>
-        <div class="row justify-content-center text-center">
+            <h4 id="score">Score: 0</h4>           
+          </div> 
           <div class="col-12">
-            <div class="container">
-                <div id="game-board" class="game-board" class="row"></div>
-            </div>            
-            <p id="status-message"></p> 
-            <div class="d-flex justify-content-center my-5">
-              <button id="restart-game-button" class="btn btn-outline-dark btn-lg restart-game-button">Restart Game</button>
-            </div>            
+            <div id="game-board" class="game-board row justify-content-center"></div> 
+          </div> 
+          <div class="col-12">
+            <button id="start-game-btn" class="btn btn-outline-dark btn-lg start-game-btn my-5">Start Game</button>     
           </div>
-        </div>          
-      </div>                       
+        </div>                    
+      </div>                               
     </main>
     <!-- Full screen Modal -->
     <div class="modal fade" id="congratulationsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-fullscreen">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h2 class="modal-title fs-5" id="exampleModalLabel" >Your Game Results:</h2>           
           </div>
           <div class="modal-body">
-           <h5> <p id="status-message"></p> </h5>
-          </div>          
+           <h5><p id="status-message"></p></h5>           
+          </div>  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="modal-continue-btn">Start level</button>
+          </div>        
         </div>
       </div>
     </div>
