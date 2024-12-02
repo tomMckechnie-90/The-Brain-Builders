@@ -144,7 +144,9 @@ function flipCard(card, value) {
     } else {
       // Flip back after delay if no match
       setTimeout(() => {
-        scores -= 1;
+        if (scores > 0) {
+          scores -= 1;
+        }
         mismatchedPairs++;
         const scoreDisplay = document.getElementById("score");
         scoreDisplay.textContent = `Score: ${scores} points`;
