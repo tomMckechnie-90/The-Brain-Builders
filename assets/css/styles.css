@@ -18,7 +18,13 @@ body {
     line-height: 1.6;
     color: #ffffff;
     background-color: #87ceeb;
-}   
+    text-align: center;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Protest Revolution', sans-serif;
@@ -47,18 +53,25 @@ header#hero {
   margin-top: 20px;
 } */
 
+#gane-container {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
 #game-board {
   display: grid;
-  grid-template-columns: repeat(4, 120px);
+  /* grid-template-columns: repeat(4, 120px); */
   gap: 10px;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   justify-content: center;
 }
 
 /* card container*/
 .card {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   border: 1px solid #ccc; /* test and remove */
   perspective: 1000px; 
   position: relative;
@@ -76,7 +89,7 @@ header#hero {
   height: 100%;
   position: relative;
   transform-style: preserve-3d; /* Responsible for 3d transformation */
-  transition: transform 0.6s;
+  /* transition: transform 0.6s; */
 }
 
 /* Front and Back Faces*/
@@ -97,8 +110,8 @@ header#hero {
 
 /* Front Face (Shows "?") */
 .card-front {
-  background-color: #98ff98; /* Light gray background */
-  color: #ffffff;           /* Dark text */
+  background-color: #98ff98;
+  color: #ffffff;           
   z-index: 2;
   border: 1px solid #98ff98;
 }
@@ -206,33 +219,27 @@ header#hero {
 
 
 
+/* Media Queries */
 
-@media (max-width: 320px) {
+@media (max-width: 768px) {
   #game-board {
-  display: grid;
-  grid-template-columns: repeat(2, 120px);
-  gap: 10px;
-  margin-top: 20px;
-  justify-content: center;
-  min-height: calc(100vh - 40px); /* Adjust height to fit screen */
+    grid-template-columns: repeat(4, 90px); /* Adjust column count */
   }
-
-  .container {
-    text-align: center;
+  .card {
+    width: 100px; /* Adjust card size */
+    height: 100px;
   }
 }
 
-@media (max-width: 568px) {
-  #game-board {
-  display: grid;
-  grid-template-columns: repeat(2, 120px);
-  gap: 10px;
-  margin-top: 20px;
-  justify-content: center;
-  min-height: calc(100vh - 40px); /* Adjust height to fit screen */
-  }
 
-  .container {
-    text-align: center;
+
+@media (min-width: 320px) {
+  #game-board {
+    grid-template-columns: repeat(4, 70px); /* Adjust column count */
+  }
+  .card {
+    width: 60px; /* Adjust card size */
+    height: 60px;
   }
 }
+
